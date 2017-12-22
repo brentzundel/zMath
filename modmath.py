@@ -1,6 +1,5 @@
 '''
 A small library of modular arithmetic functions
-implemented in Python 2.7 by Brent Zundel.
 
 '''
 
