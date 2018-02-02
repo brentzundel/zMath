@@ -1,8 +1,8 @@
-'''
+"""
 A small library of modular arithmetic functions
-implemented in Python 2.7 by Brent Zundel.
+implemented in Python 3 by Brent Zundel.
 
-'''
+"""
 
 
 def isEven(x):
@@ -14,24 +14,24 @@ def isOdd(x):
 
 
 def gcd(a, b):
-    '''
+    """
   gcDen(a, b) -> number
 
   A traditional implementation of Euclid's algorithm
   for finding the greatest common denominator.
-    '''
+    """
     while b > 0:
         a, b = b, a % b
     return a
 
 
 def gcdBin(a, b):
-    '''
+    """
   gcdBin(a, b) -> number
 
   An implementation of a gcd algorithm using binary comparison
   and shifting rather than the more expensive modulus operator.
-    '''
+    """
     if a < b: a, b = b, a
     if b == 0: return a
     if a & 1:
@@ -47,13 +47,13 @@ def gcdBin(a, b):
 
 
 def extEucBin(x, y):
-    '''
+    """
   extEucBin(a, b) -> number
 
   An implementation of the Extended Euclidean Algorithm
   used for discovering x and y in the equation:
   ax + by = d, where d is the greatest common denominator of a and b
-    '''
+    """
     g = 1
     while isEven(x) and isEven(y):
         x, y, g = x >> 1, y >> 1, g << 1
@@ -80,13 +80,13 @@ def extEucBin(x, y):
 
 
 def extEuclid(a, b):
-    '''
+    """
   extEuclidI(a, b) -> number, number, number
 
   An iterative implementation of the Extended Euclidean Algorithm
   used for discovering x and y in the equation:
   ax + by = d, where d is the greatest common denominator of a and b.
-    '''
+    """
     x = 0
     lastx = 1
     y = 1
@@ -100,13 +100,13 @@ def extEuclid(a, b):
 
 
 def extEuclidR(a, b):
-    '''
+    """
   extEuclidR(a, b) -> number, number, number
 
   A recursive implementation of the Extended Euclidean Algorithm
   used for discovering x and y in the equation:
   ax + by = d, where d is the greatest common denominator of a and b.
-    '''
+    """
     if b == 0:
         return (1, 0, a)
     else:
@@ -116,12 +116,12 @@ def extEuclidR(a, b):
 
 
 def relPrime(a, b):
-    '''
+    """
   relPrime(a, b) -> boolean
 
   Tests if two integers are relatively prime
   using the gcd() function.
-    '''
+    """
     if gcd(a, b) == 1:
         return True
     else:
@@ -129,31 +129,31 @@ def relPrime(a, b):
 
 
 def lcm(a, b):
-    '''
+    """
   lcm(a, b) -> number
 
   Returns least common multiple of two integers
   a and b using the gcd function.
-    '''
+    """
     return a * b / gcd(a, b)
 
 
 def lcmList(numList):
-    '''
+    """
     lcmList(numList) -> number
 
     lcmList returns the lcm of a list of numbers
-    '''
+    """
     return reduce(lcm, numList)
 
 
 def invMod(a, b):
-    '''
+    """
   invMod(a, b) -> number
 
   Returns the inverse of a mod b, if it exists.
   Raises exception if the inverse doesn't exist.
-    '''
+    """
     (x, y, gcd) = extEuclid(a, b)
     if gcd == 1:
         if x < 0:
@@ -164,13 +164,13 @@ def invMod(a, b):
 
 
 def CRT(A, N):
-    '''
+    """
   CRT(A, N) -> number
 
   Chinese Remainder Theorem
   For list of remainders A and list of prime factors N,
   solves for X, such that  X mod N[i] = A[i], for i = 0,1,2,...,t
-    '''
+    """
     n, a = 1, 0
     for Ni in N:
         n *= Ni
@@ -185,11 +185,11 @@ def CRT(A, N):
 
 
 def modExp(a, b, n):
-    '''
+    """
     modExp(a, b, n) -> number
 
     modExp calculates a**b mod n
-    '''
+    """
     c = 0
     d = 1
     for bi in bin(b)[2:]:
@@ -202,12 +202,12 @@ def modExp(a, b, n):
 
 
 def witHelp(x):
-    '''
+    """
     witHelp(x) -> (t, u)
 
     witHelp returns x as a tuple (t, u),
     where x = u * 2**t
-    '''
+    """
     t = 0
     while not (x & 1):
         x >>= 1
@@ -216,12 +216,12 @@ def witHelp(x):
 
 
 def witness(a, n):
-    '''
+    """
     witness(a, n) -> boolean
 
     witness tests if a serves as a witness
     of the composite nature of n.
-    '''
+    """
     t, u = witHelp(n - 1)
     x0 = xi = modExp(a, u, n)
     for i in range(1, t + 1):
@@ -235,7 +235,7 @@ def witness(a, n):
 
 
 def isPrime(n, s=50):
-    '''
+    """
     isPrime(n, [s = 50]) -> boolean
 
     isPrime uses the Miller Rabin primality test for efficient
@@ -243,7 +243,7 @@ def isPrime(n, s=50):
     Optional argument s is number of test iterations.
     Before beginning the Miller Rabin test, isPrime tests if any
     known prime < 20000 can factor n.
-    '''
+    """
     from random import randrange
     for x in primes:
         if x < n:
@@ -257,14 +257,14 @@ def isPrime(n, s=50):
 
 
 def findPrime(n, other=1):
-    '''
+    """
     findPrime(n, [other = 1]) -> number
 
     findPrime returns a prime number n bits in length,
     rounded up to nearest byte.
     Optional argument other used to find a different
     prime number than other
-    '''
+    """
     from random import randrange
     beg = 1
     beg <<= n
@@ -277,12 +277,12 @@ def findPrime(n, other=1):
 
 
 def factor(n):
-    '''
+    """
     factor(n) -> integer
 
     factor attempts to find a prime factor of n using
     Pollard's rho heuristic
-    '''
+    """
     from random import randrange
     while True:
         i = 1
@@ -298,6 +298,9 @@ def factor(n):
                 break
 
 
+"""
+A list of prime numbers
+"""
 primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
           73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
           157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229,
